@@ -1,0 +1,11 @@
+NomEmpre=LOGAM S.A
+IP=192.168.100.105
+Ratios=38400
+PuertoImpresora=COM4
+ServidorBD=SVRLOGAM2008
+NombreBD=BD_STANDAR_LOGAM
+Usuario=LOGAM
+Password=LOGAMM
+DirreccionServidor=192.168.100.27
+PuertoServidor=1001
+LargoTarjeta=13

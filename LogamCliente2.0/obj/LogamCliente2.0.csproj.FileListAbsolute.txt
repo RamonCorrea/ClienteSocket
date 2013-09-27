@@ -1,0 +1,36 @@
+E:\RCORREA\LOGAM\LogamCliente2.0\LogamCliente2.0\bin\Debug\LogamCliente2.0.exe
+E:\RCORREA\LOGAM\LogamCliente2.0\LogamCliente2.0\bin\Debug\LogamCliente2.0.pdb
+E:\RCORREA\LOGAM\LogamCliente2.0\LogamCliente2.0\obj\Debug\ResolveAssemblyReference.cache
+E:\RCORREA\LOGAM\LogamCliente2.0\LogamCliente2.0\obj\Debug\LogamCliente2._.Form1.resources
+E:\RCORREA\LOGAM\LogamCliente2.0\LogamCliente2.0\obj\Debug\LogamCliente2._0.Properties.Resources.resources
+E:\RCORREA\LOGAM\LogamCliente2.0\LogamCliente2.0\obj\Debug\LogamCliente2.0.csproj.GenerateResource.Cache
+E:\RCORREA\LOGAM\LogamCliente2.0\LogamCliente2.0\obj\Debug\LogamCliente2.0.exe
+E:\RCORREA\LOGAM\LogamCliente2.0\LogamCliente2.0\obj\Debug\LogamCliente2.0.pdb
+C:\RCORREA\LOGAM\LogamCliente2.0\LogamCliente2.0\bin\Debug\LogamCliente2.0.exe
+C:\RCORREA\LOGAM\LogamCliente2.0\LogamCliente2.0\bin\Debug\LogamCliente2.0.pdb
+C:\RCORREA\LOGAM\LogamCliente2.0\LogamCliente2.0\obj\Debug\ResolveAssemblyReference.cache
+C:\RCORREA\LOGAM\LogamCliente2.0\LogamCliente2.0\obj\Debug\LogamCliente2._0.Properties.Resources.resources
+C:\RCORREA\LOGAM\LogamCliente2.0\LogamCliente2.0\obj\Debug\LogamCliente2.0.csproj.GenerateResource.Cache
+C:\RCORREA\LOGAM\LogamCliente2.0\LogamCliente2.0\obj\Debug\LogamCliente2.0.exe
+C:\RCORREA\LOGAM\LogamCliente2.0\LogamCliente2.0\obj\Debug\LogamCliente2.0.pdb
+C:\RCORREA\LOGAM\LogamCliente2.0\LogamCliente2.0\obj\Debug\Cliente.Form1.resources
+D:\Documents and Settings\rcorrea01\Escritorio\LOGAM\LogamCliente2.0\LogamCliente2.0\obj\Debug\ResolveAssemblyReference.cache
+D:\Documents and Settings\rcorrea01\Escritorio\LOGAM\LogamCliente2.0\LogamCliente2.0\obj\Debug\Cliente.Form1.resources
+D:\Documents and Settings\rcorrea01\Escritorio\LOGAM\LogamCliente2.0\LogamCliente2.0\obj\Debug\LogamCliente2._0.Properties.Resources.resources
+D:\Documents and Settings\rcorrea01\Escritorio\LOGAM\LogamCliente2.0\LogamCliente2.0\obj\Debug\LogamCliente2.0.csproj.GenerateResource.Cache
+D:\Documents and Settings\rcorrea01\Escritorio\LOGAM\LogamCliente2.0\LogamCliente2.0\obj\Debug\LogamCliente2.0.exe
+D:\Documents and Settings\rcorrea01\Escritorio\LOGAM\LogamCliente2.0\LogamCliente2.0\bin\Debug\LogamCliente2.0.exe
+D:\Documents and Settings\rcorrea01\Escritorio\LOGAM\LogamCliente2.0\LogamCliente2.0\bin\Debug\LogamCliente2.0.pdb
+D:\Documents and Settings\rcorrea01\Escritorio\LOGAM\LogamCliente2.0\LogamCliente2.0\obj\Debug\LogamCliente2.0.pdb
+D:\Documents and Settings\rcorrea01\Escritorio\LOGAM\LogamCliente2.0\LogamCliente2.0\bin\Debug\BioID.dll
+D:\Documents and Settings\rcorrea01\Escritorio\LOGAM\LogamCliente2.0\LogamCliente2.0\bin\Release\LogamCliente2.0.exe
+D:\Documents and Settings\rcorrea01\Escritorio\LOGAM\LogamCliente2.0\LogamCliente2.0\bin\Release\LogamCliente2.0.pdb
+D:\Documents and Settings\rcorrea01\Escritorio\LOGAM\LogamCliente2.0\LogamCliente2.0\bin\Release\BioID.dll
+D:\Documents and Settings\rcorrea01\Escritorio\LOGAM\LogamCliente2.0\LogamCliente2.0\obj\Release\ResolveAssemblyReference.cache
+D:\Documents and Settings\rcorrea01\Escritorio\LOGAM\LogamCliente2.0\LogamCliente2.0\obj\Release\Cliente.Form1.resources
+D:\Documents and Settings\rcorrea01\Escritorio\LOGAM\LogamCliente2.0\LogamCliente2.0\obj\Release\LogamCliente2._0.Properties.Resources.resources
+D:\Documents and Settings\rcorrea01\Escritorio\LOGAM\LogamCliente2.0\LogamCliente2.0\obj\Release\LogamCliente2.0.csproj.GenerateResource.Cache
+D:\Documents and Settings\rcorrea01\Escritorio\LOGAM\LogamCliente2.0\LogamCliente2.0\obj\Release\LogamCliente2.0.exe
+D:\Documents and Settings\rcorrea01\Escritorio\LOGAM\LogamCliente2.0\LogamCliente2.0\obj\Release\LogamCliente2.0.pdb
+D:\Documents and Settings\rcorrea01\Escritorio\LOGAM\LogamCliente2.0\LogamCliente2.0\bin\Debug\System.Data.SqlClient.dll
+D:\Documents and Settings\rcorrea01\Escritorio\LOGAM\LogamCliente2.0\LogamCliente2.0\bin\Debug\System.Data.SqlClient.xml
