@@ -82,6 +82,7 @@
       <DesignTime>True</DesignTime>
     </Compile>
     <Compile Include="Unitech.cs" />
+    <Compile Include="Updatefecha.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="logam.ico" />

@@ -20,3 +20,14 @@ D:\Documents and Settings\rcorrea01\Escritorio\16-09-2013\PROYECTOS-LOGAM\LogamC
 D:\Documents and Settings\rcorrea01\Escritorio\16-09-2013\PROYECTOS-LOGAM\LogamCliente2.0\LogamCliente2.0\obj\Debug\LogamCliente.csproj.GenerateResource.Cache
 D:\Documents and Settings\rcorrea01\Escritorio\16-09-2013\PROYECTOS-LOGAM\LogamCliente2.0\LogamCliente2.0\obj\Debug\Cliente.exe
 D:\Documents and Settings\rcorrea01\Escritorio\16-09-2013\PROYECTOS-LOGAM\LogamCliente2.0\LogamCliente2.0\obj\Debug\Cliente.pdb
+D:\Comunicaciones\LogamCliente2.0\LogamCliente2.0\bin\Debug\Cliente.exe
+D:\Comunicaciones\LogamCliente2.0\LogamCliente2.0\bin\Debug\Cliente.pdb
+D:\Comunicaciones\LogamCliente2.0\LogamCliente2.0\bin\Debug\BioID.dll
+D:\Comunicaciones\LogamCliente2.0\LogamCliente2.0\bin\Debug\System.Data.SqlClient.dll
+D:\Comunicaciones\LogamCliente2.0\LogamCliente2.0\bin\Debug\System.Data.SqlClient.xml
+D:\Comunicaciones\LogamCliente2.0\LogamCliente2.0\obj\Debug\ResolveAssemblyReference.cache
+D:\Comunicaciones\LogamCliente2.0\LogamCliente2.0\obj\Debug\Cliente.Form1.resources
+D:\Comunicaciones\LogamCliente2.0\LogamCliente2.0\obj\Debug\Cliente.Properties.Resources.resources
+D:\Comunicaciones\LogamCliente2.0\LogamCliente2.0\obj\Debug\LogamCliente.csproj.GenerateResource.Cache
+D:\Comunicaciones\LogamCliente2.0\LogamCliente2.0\obj\Debug\Cliente.exe
+D:\Comunicaciones\LogamCliente2.0\LogamCliente2.0\obj\Debug\Cliente.pdb

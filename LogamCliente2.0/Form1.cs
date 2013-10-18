@@ -27,20 +27,18 @@ namespace Cliente
         private int Ratios; 
         private string PuertoImpresora; 
 
-        private string ServidorBD; 
-        private string NombreBD; 
-        private string Usuario; 
-        private string Password; 
-
         private string DirreccionIPServidor; 
         private int PuertoServidor;
         private int LargoCadena;
 
+        /* INICIO DE LA APLICACION */
         public Form1()
         {
             Unitech.DisableTaskbar();
             Unitech.DisableDesktop();
-            Unitech.DisableExploreToolbar();
+            Unitech.DisableExploreToolbar();  
+            Updatefecha ejem = new Updatefecha();
+            ejem.EstableHoraServidor();
             InitializeComponent();
         }
 
@@ -64,40 +62,30 @@ namespace Cliente
            
         }
 
-        /* TIMER ENCARGADO DE ACTUALIZAR EL RELOJ DE EL CLIENTE */
+        /* TIMER QUE CONTROLA EL ESTADO DE ONLINE O OFFLINE DEL RELOJ */       
         private void timer1_Tick(object sender, EventArgs e)
         {
-            /* ASIGNACION DE VALORES A PARAMETROS MEDIANTE LA FUNCION LecturaParametros */
-            ServidorBD = archivo.Datos[4].ToString();
-            NombreBD = archivo.Datos[5].ToString();
-            Usuario = archivo.Datos[6].ToString();
-            Password = archivo.Datos[7].ToString();
-
-            /* SE ESPECIFICA AL SERVIDOR AL CUAL SE VA A CONECTAR EL CLIENTE PARA OBTENER LA HORA Y LA FECHA */
-            SqlConnection conn = new SqlConnection("data source =" + ServidorBD + "; initial catalog =" + NombreBD + "; user id =" + Usuario +"; password ="+ Password);
-            SqlDataReader lectura;
-            SqlCommand Fecha = new SqlCommand();
-
+            /* SE ENVIA CADENA FANTASMA, VERIFICACION QUE SE REALIZA PARA SABER SI EL RELOJ ESTA EN LINEA */
+            DirreccionIPServidor = archivo.Datos[8].ToString();
+            PuertoServidor = Convert.ToInt32(archivo.Datos[9]);
             try
             {
-                /* SENTENCIAS LA CUALES ABREN LA CONEXION A LA BASE DE DATOS Y EJECUTAN EL COMANDO SQL */
-                conn.Open();
-                Fecha.Connection = conn;
-                Fecha.CommandText = "SELECT convert(char(10),getdate(),103) +' '+ convert(char(10),getdate(),114) as 'Fecha_Actual'";
-                lectura = Fecha.ExecuteReader();
-                while (lectura.Read())
-                {
-                    lblHoraServidor.Text = lectura[0].ToString();
-                    lblHoraServidor.Text = lblHoraServidor.Text.Remove(19, 2);
-                }
-                lectura.Close();
-                conn.Close();
+                ConvierteCadena TrabajaCadena = new ConvierteCadena();
+                Socket client = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
+                IPEndPoint DireccionServidor = new IPEndPoint(IPAddress.Parse(DirreccionIPServidor), PuertoServidor);
+
+                client.Connect(DireccionServidor);
+                byte[] bytesCliente = new byte[35];
+                byte[] sendResponse = new byte[35];
+
+                sendResponse = Encoding.Default.GetBytes("1012ghost");
+                client.Send(sendResponse);
             }
             catch (Exception ex)
             {
-                lblHoraServidor.Text = ex.Message;
-                conn.Close();
+                lblestado.Text = ex.Message;
             }
+            
         }
 
         /* TIMER QUE SE ENCARGA DE ACTUALIZAR EL MENSAJE DE LBLMENSAJE LIMPIANDO Y DANDO EL FOCUS A TXTINGRESO */
@@ -183,6 +171,8 @@ namespace Cliente
 
                         int bytesRec = client.Receive(bytesCliente);
                         Mensaje = Encoding.Default.GetString(bytesCliente, 0, bytesRec);
+                        Timer_inline.Enabled = false;
+                        Timer_inline.Enabled = true;
 
                         /* LLAMADA A LA FUNCION QUE SE ENCARGA DE IMPRIMIR EL VALE */
                         /* 06 EQUIVALE MARCA RESGISTRADA, 01 EQUIVALE A ALGUN ERROR EN LA MARCA */
@@ -351,6 +341,22 @@ namespace Cliente
             catch (Exception ex)
             {
                 lblMensaje.Text = ex.Message;
+            }
+        }
+
+        private void timer1_Tick_1(object sender, EventArgs e)
+        {
+            /* SE COMPRUEBA QUE SI LA LA HORA ACTUAL ES IGUAL A LA QUE SE ESTABLECE COMO HORA DE
+             * ACTUALIZACION */
+            if (DateTime.Now.ToString("HH:mm") == archivo.Datos[11].ToString())
+            {
+                lblHoraServidor.Text = DateTime.Now.ToString();
+            }
+            else
+            {
+                Updatefecha fecha = new Updatefecha();
+                fecha.EstableHoraServidor();
+                lblHoraServidor.Text = DateTime.Now.ToString();
             }
         }
     }

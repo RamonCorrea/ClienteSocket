@@ -39,7 +39,7 @@ namespace Cliente
             this.btnEntrada = new System.Windows.Forms.Button();
             this.btnSalida = new System.Windows.Forms.Button();
             this.lblHoraServidor = new System.Windows.Forms.Label();
-            this.Timer_Hora = new System.Windows.Forms.Timer();
+            this.Timer_inline = new System.Windows.Forms.Timer();
             this.lblMensaje = new System.Windows.Forms.Label();
             this.Timer_Restablece = new System.Windows.Forms.Timer();
             this.btnEnrolar = new System.Windows.Forms.Button();
@@ -48,6 +48,7 @@ namespace Cliente
             this.btnElimina = new System.Windows.Forms.Button();
             this.Timer_Menu = new System.Windows.Forms.Timer();
             this.serialPort1 = new System.IO.Ports.SerialPort(this.components);
+            this.Timer_Segundero = new System.Windows.Forms.Timer();
             this.SuspendLayout();
             // 
             // lblestado
@@ -69,10 +70,9 @@ namespace Cliente
             // 
             // btnEntrada
             // 
-            this.btnEntrada.BackColor = System.Drawing.SystemColors.Desktop;
             this.btnEntrada.Font = new System.Drawing.Font("Tahoma", 18F, System.Drawing.FontStyle.Regular);
-            this.btnEntrada.ForeColor = System.Drawing.Color.White;
-            this.btnEntrada.Location = new System.Drawing.Point(15, 53);
+            this.btnEntrada.ForeColor = System.Drawing.Color.Black;
+            this.btnEntrada.Location = new System.Drawing.Point(24, 53);
             this.btnEntrada.Name = "btnEntrada";
             this.btnEntrada.Size = new System.Drawing.Size(128, 153);
             this.btnEntrada.TabIndex = 5;
@@ -81,10 +81,9 @@ namespace Cliente
             // 
             // btnSalida
             // 
-            this.btnSalida.BackColor = System.Drawing.SystemColors.Desktop;
             this.btnSalida.Font = new System.Drawing.Font("Tahoma", 18F, System.Drawing.FontStyle.Regular);
-            this.btnSalida.ForeColor = System.Drawing.Color.White;
-            this.btnSalida.Location = new System.Drawing.Point(169, 53);
+            this.btnSalida.ForeColor = System.Drawing.Color.Black;
+            this.btnSalida.Location = new System.Drawing.Point(174, 53);
             this.btnSalida.Name = "btnSalida";
             this.btnSalida.Size = new System.Drawing.Size(128, 153);
             this.btnSalida.TabIndex = 6;
@@ -100,11 +99,11 @@ namespace Cliente
             this.lblHoraServidor.Size = new System.Drawing.Size(312, 34);
             this.lblHoraServidor.TextAlign = System.Drawing.ContentAlignment.TopRight;
             // 
-            // Timer_Hora
+            // Timer_inline
             // 
-            this.Timer_Hora.Enabled = true;
-            this.Timer_Hora.Interval = 1000;
-            this.Timer_Hora.Tick += new System.EventHandler(this.timer1_Tick);
+            this.Timer_inline.Enabled = true;
+            this.Timer_inline.Interval = 300000;
+            this.Timer_inline.Tick += new System.EventHandler(this.timer1_Tick);
             // 
             // lblMensaje
             // 
@@ -118,13 +117,13 @@ namespace Cliente
             // 
             // Timer_Restablece
             // 
-            this.Timer_Restablece.Interval = 2000;
+            this.Timer_Restablece.Interval = 3000;
             this.Timer_Restablece.Tick += new System.EventHandler(this.Timer_Restablece_Tick);
             // 
             // btnEnrolar
             // 
             this.btnEnrolar.Font = new System.Drawing.Font("Arial", 10F, System.Drawing.FontStyle.Bold);
-            this.btnEnrolar.Location = new System.Drawing.Point(3, 139);
+            this.btnEnrolar.Location = new System.Drawing.Point(85, 139);
             this.btnEnrolar.Name = "btnEnrolar";
             this.btnEnrolar.Size = new System.Drawing.Size(67, 67);
             this.btnEnrolar.TabIndex = 8;
@@ -134,7 +133,7 @@ namespace Cliente
             // btnNoApta
             // 
             this.btnNoApta.Font = new System.Drawing.Font("Arial", 10F, System.Drawing.FontStyle.Bold);
-            this.btnNoApta.Location = new System.Drawing.Point(76, 139);
+            this.btnNoApta.Location = new System.Drawing.Point(174, 139);
             this.btnNoApta.Name = "btnNoApta";
             this.btnNoApta.Size = new System.Drawing.Size(67, 67);
             this.btnNoApta.TabIndex = 9;
@@ -144,7 +143,7 @@ namespace Cliente
             // btnVerifica
             // 
             this.btnVerifica.Font = new System.Drawing.Font("Arial", 10F, System.Drawing.FontStyle.Bold);
-            this.btnVerifica.Location = new System.Drawing.Point(169, 139);
+            this.btnVerifica.Location = new System.Drawing.Point(7, 139);
             this.btnVerifica.Name = "btnVerifica";
             this.btnVerifica.Size = new System.Drawing.Size(72, 67);
             this.btnVerifica.TabIndex = 10;
@@ -171,6 +170,12 @@ namespace Cliente
             this.serialPort1.BaudRate = 38400;
             this.serialPort1.Handshake = System.IO.Ports.Handshake.XOnXOff;
             this.serialPort1.PortName = "COM4";
+            // 
+            // Timer_Segundero
+            // 
+            this.Timer_Segundero.Enabled = true;
+            this.Timer_Segundero.Interval = 1000;
+            this.Timer_Segundero.Tick += new System.EventHandler(this.timer1_Tick_1);
             // 
             // Form1
             // 
@@ -206,7 +211,7 @@ namespace Cliente
         private System.Windows.Forms.Button btnEntrada;
         private System.Windows.Forms.Button btnSalida;
         private Label lblHoraServidor;
-        private Timer Timer_Hora;
+        private Timer Timer_inline;
         private Label lblMensaje;
         public Timer Timer_Restablece;
         private Button btnEnrolar;
@@ -215,6 +220,7 @@ namespace Cliente
         private Button btnElimina;
         private Timer Timer_Menu;
         private System.IO.Ports.SerialPort serialPort1;
+        private Timer Timer_Segundero;
     }
 }
 

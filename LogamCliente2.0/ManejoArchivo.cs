@@ -58,11 +58,12 @@ namespace Cliente
                 string Ruta = @"\SDMMC\pruebas\Configuracion.txt";
                 //string RutaWindows = "Configuracion.txt";
                 StreamReader fichero = File.OpenText(Ruta);
+                //StreamReader fichero = File.OpenText(RutaWindows);
                 string linea;
 
                 /* ESTE ARRAY CONTIENE LA CANTIDAD DE CARACTERES QUE SE OCUPARAN EN LA FUNCION SUBSTRING COMO INDICE
                  * PARA ASI OBTENER LOS DATOS PARAMETRIZADOS */
-                int[] Posiciones = { 9, 3, 7, 16, 11, 9, 8, 9, 19, 15, 13 }; 
+                int[] Posiciones = { 9, 3, 7, 16, 11, 9, 8, 9, 19, 15, 13, 16}; 
                 int contador = 0;
 
                 while (contador <= Posiciones.Length - 1)
