@@ -1,12 +1,12 @@
 NomEmpre=LOGAM S.A
-IP=192.168.100.105
+IP=192.168.100.208
 Ratios=38400
 PuertoImpresora=COM4
 ServidorBD=SVRLOGAM2008
-NombreBD=BD_STANDAR_LOGAM
+NombreBD=BD_ANDINA_2010
 Usuario=LOGAM
 Password=LOGAMM
 DirreccionServidor=192.168.100.105
 PuertoServidor=1001
-LargoTarjeta=13
-ActualizarFecha=17:30
+LargoTarjeta=10
+ActualizarFecha=14:15

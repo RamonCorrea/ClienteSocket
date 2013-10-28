@@ -16,8 +16,8 @@ namespace Cliente
             /* CONSTRUCTOR DE LA CLASE */
             public ManejoArchivo()
             {
-                nombreFichero = @"\SDMMC\pruebas\MarcaFueraLinea.txt";
-                //nombreFichero = "MarcaFueraLinea.txt";
+                //nombreFichero = @"\SDMMC\pruebas\MarcaFueraLinea.txt";
+                nombreFichero = "MarcaFueraLinea.txt";
                 LecturaParametros();
             }
 
@@ -55,9 +55,9 @@ namespace Cliente
             /* METODO EL CUAL LEE DESDE UN ARCHIVO INI LOS PARAMETROS PARA CONFIGURAR EL MT380 */
             public void LecturaParametros()
             {
-                string Ruta = @"\SDMMC\pruebas\Configuracion.txt";
-                //string RutaWindows = "Configuracion.txt";
-                StreamReader fichero = File.OpenText(Ruta);
+                //string Ruta = @"\SDMMC\pruebas\Configuracion.txt";
+                string RutaWindows = "Configuracion.txt";
+                StreamReader fichero = File.OpenText(RutaWindows);
                 //StreamReader fichero = File.OpenText(RutaWindows);
                 string linea;
 

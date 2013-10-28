@@ -20,6 +20,7 @@ namespace Cliente
     public partial class Form1 : Form
     {
         ManejoArchivo archivo = new ManejoArchivo();
+        ConvierteCadena TrabajaCadena;
         
         private int evento;
         private string NomEmpre; 
@@ -30,14 +31,21 @@ namespace Cliente
         private string DirreccionIPServidor; 
         private int PuertoServidor;
         private int LargoCadena;
+        private bool EstadoServidor;
 
         /* INICIO DE LA APLICACION */
         public Form1()
         {
-            Unitech.DisableTaskbar();
-            Unitech.DisableDesktop();
-            Unitech.DisableExploreToolbar();  
+            //Unitech.DisableTaskbar();
+            //Unitech.DisableDesktop();
+            //Unitech.DisableExploreToolbar(); 
+ 
             Updatefecha ejem = new Updatefecha();
+            LargoCadena = Convert.ToInt32(archivo.Datos[10]);
+            DirreccionIPServidor = archivo.Datos[8].ToString();
+            PuertoServidor = Convert.ToInt32(archivo.Datos[9]);
+            IP = archivo.Datos[1].ToString();
+            EstadoServidorE();
             ejem.EstableHoraServidor();
             InitializeComponent();
         }
@@ -62,7 +70,7 @@ namespace Cliente
            
         }
 
-        /* TIMER QUE CONTROLA EL ESTADO DE ONLINE O OFFLINE DEL RELOJ */       
+        /* TIMER QUE CONTROLA EL ESTADO DE ONLINE O OFFLINE DEL RELOJ ESTE SE EJECUTA POR DEFECTO CADA 15 MIN */       
         private void timer1_Tick(object sender, EventArgs e)
         {
             /* SE ENVIA CADENA FANTASMA, VERIFICACION QUE SE REALIZA PARA SABER SI EL RELOJ ESTA EN LINEA */
@@ -70,20 +78,19 @@ namespace Cliente
             PuertoServidor = Convert.ToInt32(archivo.Datos[9]);
             try
             {
-                ConvierteCadena TrabajaCadena = new ConvierteCadena();
                 Socket client = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
                 IPEndPoint DireccionServidor = new IPEndPoint(IPAddress.Parse(DirreccionIPServidor), PuertoServidor);
 
-                client.Connect(DireccionServidor);
-                byte[] bytesCliente = new byte[35];
-                byte[] sendResponse = new byte[35];
-
+                byte[] sendResponse = new byte[70];
                 sendResponse = Encoding.Default.GetBytes("1012ghost");
+                client.Connect(DireccionServidor);    
                 client.Send(sendResponse);
+                EstadoServidor = true;
+                client.Close();
             }
-            catch (Exception ex)
+            catch (SocketException)
             {
-                lblestado.Text = ex.Message;
+                EstadoServidor = false;
             }
             
         }
@@ -92,9 +99,8 @@ namespace Cliente
         private void Timer_Restablece_Tick(object sender, EventArgs e)
         {
             lblMensaje.Text = "INGRESE SU PIN";
+            lblRespuesta.Visible = false; 
             Timer_Restablece.Enabled = false;
-            txtingreso.Text = "";
-            txtingreso.Focus();
             RestableceMenu();
         }
 
@@ -103,6 +109,8 @@ namespace Cliente
         {
             lblMensaje.Text = "MENU MARCACION";
             txtingreso.Visible = false;
+            txtingreso.Text = string.Empty;
+            txtingreso.Enabled = false;
             btnEnrolar.Visible = false;
             btnNoApta.Visible = false;
             btnElimina.Visible = false;
@@ -117,7 +125,8 @@ namespace Cliente
         {
             txtingreso.Visible = true;
             lblMensaje.Text = "INGRESE SU PIN";
-            txtingreso.Text = "";
+            txtingreso.Text = string.Empty;
+            txtingreso.Enabled = true;
             txtingreso.Focus();
             btnEntrada.Visible = false;
             btnSalida.Visible = false;
@@ -138,39 +147,60 @@ namespace Cliente
 
         /* RUTINA QUE CONTROLA EL INGRESO AL MENU DE ADMINISTRADOR DEL RELOJ */
         private void txtingreso_TextChanged(object sender, EventArgs e)
-        {
-            LargoCadena = Convert.ToInt32(archivo.Datos[10]);
+        {  
             if (txtingreso.TextLength == LargoCadena)
             {
-                /* ASIGNACION DE PARAMETROS MEDIANTE LA FUNCION LecturaParametros */
-                DirreccionIPServidor = archivo.Datos[8].ToString();
-                PuertoServidor = Convert.ToInt32(archivo.Datos[9]);
-
-                ConvierteCadena TrabajaCadena = new ConvierteCadena();
+                /* ASIGNACION DE PARAMETROS MEDIANTE LA FUNCION LecturaParametros */             
+                TrabajaCadena = new ConvierteCadena();
                 Socket client = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
                 IPEndPoint DireccionServidor = new IPEndPoint(IPAddress.Parse(DirreccionIPServidor), PuertoServidor);
                 string Mensaje = null;
 
                 try
                 {
-                    /*INSTRUCCIONES QUE SE ENCARGAN DE LA COMUNICACION DE EL SERVIDOR Y EL CLIENTE */
-                    if (txtingreso.Text == string.Empty)
+                    byte[] bytesCliente = new byte[70];
+                    byte[] sendResponse = new byte[70]; 
+                    
+                    sendResponse = Encoding.Default.GetBytes(TrabajaCadena.TransformaCadena(txtingreso.Text, evento));
+
+                    if (EstadoServidor == false)
                     {
-                        MessageBox.Show("Ingrese Texto");
-                        txtingreso.Focus();
+                        if (evento == 1)
+                        {
+                            string cadena = TrabajaCadena.MarcaEntradaFueraLinea(txtingreso.Text, IP);
+                            archivo.EscrituraMarcaFueraLinea(cadena);
+                            Imprime_OffLine(Mensaje, 3);
+                            EstadoServidor = false;
+                            txtingreso.Text = string.Empty;
+                            lblRespuesta.Visible = true;
+                            lblRespuesta.Text = Mensaje;
+                            RestableceMenu();
+                            Timer_Restablece.Enabled = true;
+                        }
+                        else
+                        {
+                            string cadena = TrabajaCadena.MarcaSalidaFueraLinea(txtingreso.Text, IP);
+                            archivo.EscrituraMarcaFueraLinea(cadena);
+                            Imprime_OffLine(Mensaje, 4);
+                            EstadoServidor = false;
+                            txtingreso.Text = string.Empty;
+                            lblRespuesta.Visible = true;
+                            lblRespuesta.Text = Mensaje;
+                            RestableceMenu();
+                            Timer_Restablece.Enabled = true;
+                        }
                     }
                     else
                     {
                         client.Connect(DireccionServidor);
-                        byte[] bytesCliente = new byte[35];
-                        byte[] sendResponse = new byte[35];
-
-                        sendResponse = Encoding.Default.GetBytes(TrabajaCadena.TransformaCadena(txtingreso.Text, evento));
                         client.Send(sendResponse);
-                        lblMensaje.Text = "ENVIANDO INFORMACION";
 
                         int bytesRec = client.Receive(bytesCliente);
                         Mensaje = Encoding.Default.GetString(bytesCliente, 0, bytesRec);
+                        EstadoServidor = true;
+
+                        /* SE INICIALIZA EL TIMER ENCARGADO DE GENERAR EVENTO DE ENVIO DE MARCAS
+                         * FANTASMAS */
                         Timer_inline.Enabled = false;
                         Timer_inline.Enabled = true;
 
@@ -179,60 +209,56 @@ namespace Cliente
                         if (Mensaje.Substring(0, 2) == "06")
                         {
                             Imprime_OnLine(Mensaje, evento);
+                            Timer_Restablece.Enabled = true;
+                            lblRespuesta.Visible = true;
+                            lblRespuesta.Text = Mensaje;
                         }
                         else
                         {
-                            if (Mensaje.Substring(0, 2) == "01")
-                            {
-                                lblMensaje.Text = "Personal no Existe";
-                                Timer_Restablece.Enabled = true;
-                            }
+                            Timer_Restablece.Enabled = true;
+                            lblRespuesta.Visible = true;
+                            lblRespuesta.Text = Mensaje;
                         }
+                        txtingreso.Text = string.Empty;
+                        Mensaje = string.Empty;
 
-                        lblMensaje.Text = Mensaje;
-                        txtingreso.Text = "";
-                        txtingreso.Focus();
                         client.Close();
                         RestableceMenu();
                     }
                 }
                 catch (SocketException)
                 {
+
                     /* SE AGREGA SECUENCIA IF .. ELSE LA CUAL DETERMINA SE ES ENTRADA FUERA DE LINEA O SALIDA FUERA DE
                      * LINEA, LA CUAL A SU VEZ ES GUARDADA EN UN ARCHIVO TXT PARA SU POSTERIOR RESCATE DESDE
                      * EL MPOINT */
-                    ManejoArchivo fila = new ManejoArchivo();
-                    lblMensaje.Text = "SERVIDOR OFFLINE";
-                    IP = archivo.Datos[1].ToString();
+                    client.Close();
+                    lblRespuesta.Text = "Marca Resgistrada";
 
                     if (evento == 1)
                     {
-                        fila.EscrituraMarcaFueraLinea(TrabajaCadena.MarcaEntradaFueraLinea(txtingreso.Text, IP));
+                        string cadena = TrabajaCadena.MarcaEntradaFueraLinea(txtingreso.Text, IP);
+                        archivo.EscrituraMarcaFueraLinea(cadena);
                         Imprime_OffLine(Mensaje, 3);
                         Timer_Restablece.Enabled = true;
                     }
-                    else if(evento == 2)
+                    else
                     {
-                        fila.EscrituraMarcaFueraLinea(TrabajaCadena.MarcaSalidaFueraLinea(txtingreso.Text,IP));
+                        string cadena = TrabajaCadena.MarcaSalidaFueraLinea(txtingreso.Text, IP);
+                        archivo.EscrituraMarcaFueraLinea(cadena);
                         Imprime_OffLine(Mensaje, 4);
                         Timer_Restablece.Enabled = true;
                     }
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show(ex.ToString());
-                    Timer_Restablece.Enabled = true;
                 }
             }
 
             if (txtingreso.Text == "1012")
             {
-                Unitech.EnableTaskbar();
-                Unitech.EnableDesktop();
-                Unitech.EnableExploreToolbar();
+                //Unitech.EnableTaskbar();
+                //Unitech.EnableDesktop();
+                //Unitech.EnableExploreToolbar();
                 Application.Exit();
             }
-
             
             /* IF QUE CONTROLA EL ACCESO A MENU DE ADMINISTRACION */
             //if (txtingreso.Text == "1020")
@@ -248,6 +274,7 @@ namespace Cliente
             RestableceMenu();
         }
 
+        /* SE MODIFICA FUNCION AGREGANDO EL ENCENDIDO DE LA CAMARA DEL RELOJ */
         public void Imprime_OnLine(string mensaje, int even)
         {
             /* ASIGNACION DE PARAMETROS */
@@ -274,6 +301,14 @@ namespace Cliente
 
             try
             {
+                RelayAccess.SetCameraLED(1, true);
+            }
+            catch (Exception)
+            {
+            }
+
+            try
+            {
                 serialPort1.Open();
                 serialPort1.WriteLine("");
                 serialPort1.WriteLine("");
@@ -294,8 +329,17 @@ namespace Cliente
             {
                 lblMensaje.Text = ex.Message;
             }
+
+            try
+            {
+                RelayAccess.SetCameraLED(1, false);
+            }
+            catch (Exception)
+            {
+            }
         }
 
+        /* SE MODIFICA FUNCION AGREGANDO EL ENCENDIDO DE LA CAMARA DEL RELOJ */
         public void Imprime_OffLine(string mensaje, int even)
         {
             /* ASIGNACION DE PARAMETROS */
@@ -308,16 +352,24 @@ namespace Cliente
             serialPort1.PortName = PuertoImpresora;
 
             string evento = null;
-            if ((even == 01) || (even == 03))
+            if (even == 03)
             {
                 evento = "Entrada";
             }
             else
             {
-                if ((even == 02) || (even == 04))
+                if (even == 04)
                 {
                     evento = "Salida";
                 }
+            }
+           
+            try
+            {
+                RelayAccess.SetCameraLED(1, true);
+            }
+            catch (Exception)
+            {
             }
 
             try
@@ -326,7 +378,7 @@ namespace Cliente
                 serialPort1.WriteLine("");
                 serialPort1.WriteLine("");
                 serialPort1.WriteLine("");
-                serialPort1.WriteLine(" *** ASISTENCIA FUERA DE LINEA *** ");
+                serialPort1.WriteLine(" *** ASISTENCIA REGISTRADA *** ");
                 serialPort1.WriteLine("EVENTO : " + evento);
                 serialPort1.WriteLine("FECHA  : " + lblHoraServidor.Text);
                 serialPort1.WriteLine("EMPRESA: " + NomEmpre);
@@ -342,6 +394,14 @@ namespace Cliente
             {
                 lblMensaje.Text = ex.Message;
             }
+
+            try
+            {
+                RelayAccess.SetCameraLED(1, false);
+            }
+            catch (Exception)
+            {
+            }
         }
 
         private void timer1_Tick_1(object sender, EventArgs e)
@@ -350,15 +410,39 @@ namespace Cliente
              * ACTUALIZACION */
             if (DateTime.Now.ToString("HH:mm") == archivo.Datos[11].ToString())
             {
-                lblHoraServidor.Text = DateTime.Now.ToString();
-            }
-            else
-            {
                 Updatefecha fecha = new Updatefecha();
                 fecha.EstableHoraServidor();
                 lblHoraServidor.Text = DateTime.Now.ToString();
             }
+            else
+            {
+                lblHoraServidor.Text = DateTime.Now.ToString();
+            }
         }
+
+        public void EstadoServidorE()
+        {
+            DirreccionIPServidor = archivo.Datos[8].ToString();
+            PuertoServidor = Convert.ToInt32(archivo.Datos[9]);
+            try
+            {
+                Socket client = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
+                IPEndPoint DireccionServidor = new IPEndPoint(IPAddress.Parse(DirreccionIPServidor), PuertoServidor);
+
+                byte[] sendResponse = new byte[70];
+                sendResponse = Encoding.Default.GetBytes("1012ghost");
+                client.Connect(DireccionServidor);
+
+                client.Send(sendResponse);
+                EstadoServidor = true;
+                client.Close();
+            }
+            catch (SocketException)
+            {
+                EstadoServidor = false;
+            }
+        }
+
     }
 }
     

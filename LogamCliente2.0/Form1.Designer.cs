@@ -49,6 +49,7 @@ namespace Cliente
             this.Timer_Menu = new System.Windows.Forms.Timer();
             this.serialPort1 = new System.IO.Ports.SerialPort(this.components);
             this.Timer_Segundero = new System.Windows.Forms.Timer();
+            this.lblRespuesta = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // lblestado
@@ -63,6 +64,7 @@ namespace Cliente
             this.txtingreso.Location = new System.Drawing.Point(24, 71);
             this.txtingreso.MaxLength = 13;
             this.txtingreso.Name = "txtingreso";
+            this.txtingreso.PasswordChar = '*';
             this.txtingreso.Size = new System.Drawing.Size(260, 52);
             this.txtingreso.TabIndex = 3;
             this.txtingreso.Visible = false;
@@ -102,7 +104,7 @@ namespace Cliente
             // Timer_inline
             // 
             this.Timer_inline.Enabled = true;
-            this.Timer_inline.Interval = 300000;
+            this.Timer_inline.Interval = 120000;
             this.Timer_inline.Tick += new System.EventHandler(this.timer1_Tick);
             // 
             // lblMensaje
@@ -117,7 +119,7 @@ namespace Cliente
             // 
             // Timer_Restablece
             // 
-            this.Timer_Restablece.Interval = 3000;
+            this.Timer_Restablece.Interval = 5000;
             this.Timer_Restablece.Tick += new System.EventHandler(this.Timer_Restablece_Tick);
             // 
             // btnEnrolar
@@ -162,7 +164,7 @@ namespace Cliente
             // 
             // Timer_Menu
             // 
-            this.Timer_Menu.Interval = 10000;
+            this.Timer_Menu.Interval = 5000;
             this.Timer_Menu.Tick += new System.EventHandler(this.Timer_Menu_Tick);
             // 
             // serialPort1
@@ -177,6 +179,13 @@ namespace Cliente
             this.Timer_Segundero.Interval = 1000;
             this.Timer_Segundero.Tick += new System.EventHandler(this.timer1_Tick_1);
             // 
+            // lblRespuesta
+            // 
+            this.lblRespuesta.Location = new System.Drawing.Point(3, 0);
+            this.lblRespuesta.Name = "lblRespuesta";
+            this.lblRespuesta.Size = new System.Drawing.Size(312, 215);
+            this.lblRespuesta.Visible = false;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
@@ -185,6 +194,7 @@ namespace Cliente
             this.BackColor = System.Drawing.SystemColors.Desktop;
             this.ClientSize = new System.Drawing.Size(318, 215);
             this.ControlBox = false;
+            this.Controls.Add(this.lblRespuesta);
             this.Controls.Add(this.btnElimina);
             this.Controls.Add(this.btnVerifica);
             this.Controls.Add(this.btnNoApta);
@@ -221,6 +231,7 @@ namespace Cliente
         private Timer Timer_Menu;
         private System.IO.Ports.SerialPort serialPort1;
         private Timer Timer_Segundero;
+        private Label lblRespuesta;
     }
 }
 

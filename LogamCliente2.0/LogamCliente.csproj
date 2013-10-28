@@ -81,6 +81,7 @@
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
+    <Compile Include="RelayAccess.cs" />
     <Compile Include="Unitech.cs" />
     <Compile Include="Updatefecha.cs" />
   </ItemGroup>
