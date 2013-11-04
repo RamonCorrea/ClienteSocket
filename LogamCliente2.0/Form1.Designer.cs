@@ -119,7 +119,7 @@ namespace Cliente
             // 
             // Timer_Restablece
             // 
-            this.Timer_Restablece.Interval = 5000;
+            this.Timer_Restablece.Interval = 2000;
             this.Timer_Restablece.Tick += new System.EventHandler(this.Timer_Restablece_Tick);
             // 
             // btnEnrolar
@@ -181,9 +181,12 @@ namespace Cliente
             // 
             // lblRespuesta
             // 
+            this.lblRespuesta.Font = new System.Drawing.Font("Tahoma", 20F, System.Drawing.FontStyle.Regular);
+            this.lblRespuesta.ForeColor = System.Drawing.SystemColors.ControlLightLight;
             this.lblRespuesta.Location = new System.Drawing.Point(3, 0);
             this.lblRespuesta.Name = "lblRespuesta";
             this.lblRespuesta.Size = new System.Drawing.Size(312, 215);
+            this.lblRespuesta.TextAlign = System.Drawing.ContentAlignment.TopCenter;
             this.lblRespuesta.Visible = false;
             // 
             // Form1

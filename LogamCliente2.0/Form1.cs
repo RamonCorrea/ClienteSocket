@@ -36,9 +36,9 @@ namespace Cliente
         /* INICIO DE LA APLICACION */
         public Form1()
         {
-            //Unitech.DisableTaskbar();
-            //Unitech.DisableDesktop();
-            //Unitech.DisableExploreToolbar(); 
+            Unitech.DisableTaskbar();
+            Unitech.DisableDesktop();
+            Unitech.DisableExploreToolbar(); 
  
             Updatefecha ejem = new Updatefecha();
             LargoCadena = Convert.ToInt32(archivo.Datos[10]);
@@ -145,130 +145,140 @@ namespace Cliente
             btnSalida.Visible = false;
         }
 
-        /* RUTINA QUE CONTROLA EL INGRESO AL MENU DE ADMINISTRADOR DEL RELOJ */
+        /* RUTINA QUE CONTROLA EL INGRESO AL MENU DE ADMINISTRADOR DEL RELOJ, SE AGREGA CONTROL SOBRE EL INGRESO DE LA TARJETA*/
         private void txtingreso_TextChanged(object sender, EventArgs e)
-        {  
-            if (txtingreso.TextLength == LargoCadena)
-            {
-                /* ASIGNACION DE PARAMETROS MEDIANTE LA FUNCION LecturaParametros */             
-                TrabajaCadena = new ConvierteCadena();
-                Socket client = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
-                IPEndPoint DireccionServidor = new IPEndPoint(IPAddress.Parse(DirreccionIPServidor), PuertoServidor);
-                string Mensaje = null;
-
-                try
-                {
-                    byte[] bytesCliente = new byte[70];
-                    byte[] sendResponse = new byte[70]; 
-                    
-                    sendResponse = Encoding.Default.GetBytes(TrabajaCadena.TransformaCadena(txtingreso.Text, evento));
-
-                    if (EstadoServidor == false)
-                    {
-                        if (evento == 1)
-                        {
-                            string cadena = TrabajaCadena.MarcaEntradaFueraLinea(txtingreso.Text, IP);
-                            archivo.EscrituraMarcaFueraLinea(cadena);
-                            Imprime_OffLine(Mensaje, 3);
-                            EstadoServidor = false;
-                            txtingreso.Text = string.Empty;
-                            lblRespuesta.Visible = true;
-                            lblRespuesta.Text = Mensaje;
-                            RestableceMenu();
-                            Timer_Restablece.Enabled = true;
-                        }
-                        else
-                        {
-                            string cadena = TrabajaCadena.MarcaSalidaFueraLinea(txtingreso.Text, IP);
-                            archivo.EscrituraMarcaFueraLinea(cadena);
-                            Imprime_OffLine(Mensaje, 4);
-                            EstadoServidor = false;
-                            txtingreso.Text = string.Empty;
-                            lblRespuesta.Visible = true;
-                            lblRespuesta.Text = Mensaje;
-                            RestableceMenu();
-                            Timer_Restablece.Enabled = true;
-                        }
-                    }
-                    else
-                    {
-                        client.Connect(DireccionServidor);
-                        client.Send(sendResponse);
-
-                        int bytesRec = client.Receive(bytesCliente);
-                        Mensaje = Encoding.Default.GetString(bytesCliente, 0, bytesRec);
-                        EstadoServidor = true;
-
-                        /* SE INICIALIZA EL TIMER ENCARGADO DE GENERAR EVENTO DE ENVIO DE MARCAS
-                         * FANTASMAS */
-                        Timer_inline.Enabled = false;
-                        Timer_inline.Enabled = true;
-
-                        /* LLAMADA A LA FUNCION QUE SE ENCARGA DE IMPRIMIR EL VALE */
-                        /* 06 EQUIVALE MARCA RESGISTRADA, 01 EQUIVALE A ALGUN ERROR EN LA MARCA */
-                        if (Mensaje.Substring(0, 2) == "06")
-                        {
-                            Imprime_OnLine(Mensaje, evento);
-                            Timer_Restablece.Enabled = true;
-                            lblRespuesta.Visible = true;
-                            lblRespuesta.Text = Mensaje;
-                        }
-                        else
-                        {
-                            Timer_Restablece.Enabled = true;
-                            lblRespuesta.Visible = true;
-                            lblRespuesta.Text = Mensaje;
-                        }
-                        txtingreso.Text = string.Empty;
-                        Mensaje = string.Empty;
-
-                        client.Close();
-                        RestableceMenu();
-                    }
-                }
-                catch (SocketException)
-                {
-
-                    /* SE AGREGA SECUENCIA IF .. ELSE LA CUAL DETERMINA SE ES ENTRADA FUERA DE LINEA O SALIDA FUERA DE
-                     * LINEA, LA CUAL A SU VEZ ES GUARDADA EN UN ARCHIVO TXT PARA SU POSTERIOR RESCATE DESDE
-                     * EL MPOINT */
-                    client.Close();
-                    lblRespuesta.Text = "Marca Resgistrada";
-
-                    if (evento == 1)
-                    {
-                        string cadena = TrabajaCadena.MarcaEntradaFueraLinea(txtingreso.Text, IP);
-                        archivo.EscrituraMarcaFueraLinea(cadena);
-                        Imprime_OffLine(Mensaje, 3);
-                        Timer_Restablece.Enabled = true;
-                    }
-                    else
-                    {
-                        string cadena = TrabajaCadena.MarcaSalidaFueraLinea(txtingreso.Text, IP);
-                        archivo.EscrituraMarcaFueraLinea(cadena);
-                        Imprime_OffLine(Mensaje, 4);
-                        Timer_Restablece.Enabled = true;
-                    }
-                }
-            }
-
+        {
             if (txtingreso.Text == "1012")
             {
-                //Unitech.EnableTaskbar();
-                //Unitech.EnableDesktop();
-                //Unitech.EnableExploreToolbar();
+                Unitech.EnableTaskbar();
+                Unitech.EnableDesktop();
+                Unitech.EnableExploreToolbar();
                 Application.Exit();
             }
-            
-            /* IF QUE CONTROLA EL ACCESO A MENU DE ADMINISTRACION */
-            //if (txtingreso.Text == "1020")
-            //{
-            //    IngresoMenuAdmin();
-            //}
+
+            if (txtingreso.TextLength == LargoCadena)
+            {
+                string Comprueba = txtingreso.Text.Remove(5, 8);
+                string tarjeta = txtingreso.Text.Remove(0, 5);
+
+                if (Comprueba == "LOGAM")
+                {
+                    /* ASIGNACION DE PARAMETROS MEDIANTE LA FUNCION LecturaParametros */
+                    TrabajaCadena = new ConvierteCadena();
+                    Socket client = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
+                    IPEndPoint DireccionServidor = new IPEndPoint(IPAddress.Parse(DirreccionIPServidor), PuertoServidor);
+                    string Mensaje = null;
+
+                    try
+                    {
+                        byte[] bytesCliente = new byte[70];
+                        byte[] sendResponse = new byte[70];
+
+                        sendResponse = Encoding.Default.GetBytes(TrabajaCadena.TransformaCadena(tarjeta, evento));
+
+                        if (EstadoServidor == false)
+                        {
+                            if (evento == 1)
+                            {
+                                string cadena = TrabajaCadena.MarcaEntradaFueraLinea(tarjeta, IP);
+                                archivo.EscrituraMarcaFueraLinea(cadena);
+                                Imprime_OffLine(Mensaje, 3, tarjeta);
+                                EstadoServidor = false;
+                                txtingreso.Text = string.Empty;
+                                lblRespuesta.Visible = true;
+                                lblRespuesta.Text = "Asistencia Registrada";
+                                Timer_Restablece.Enabled = true;
+                                RestableceMenu();
+                            }
+                            else
+                            {
+                                string cadena = TrabajaCadena.MarcaSalidaFueraLinea(tarjeta, IP);
+                                archivo.EscrituraMarcaFueraLinea(cadena);
+                                Imprime_OffLine(Mensaje, 4, tarjeta);
+                                EstadoServidor = false;
+                                txtingreso.Text = string.Empty;
+                                lblRespuesta.Visible = true;
+                                lblRespuesta.Text = "Asistencia Registrada";
+                                Timer_Restablece.Enabled = true;
+                                RestableceMenu();
+                            }
+                        }
+                        else
+                        {
+                            client.Connect(DireccionServidor);
+                            client.Send(sendResponse);
+
+                            int bytesRec = client.Receive(bytesCliente);
+                            Mensaje = Encoding.Default.GetString(bytesCliente, 0, bytesRec);
+                            EstadoServidor = true;
+
+                            /* SE INICIALIZA EL TIMER ENCARGADO DE GENERAR EVENTO DE ENVIO DE MARCAS
+                             * FANTASMAS */
+                            Timer_inline.Enabled = false;
+                            Timer_inline.Enabled = true;
+
+                            /* LLAMADA A LA FUNCION QUE SE ENCARGA DE IMPRIMIR EL VALE */
+                            /* 06 EQUIVALE MARCA RESGISTRADA, 01 EQUIVALE A ALGUN ERROR EN LA MARCA */
+                            if (Mensaje.Substring(0, 2) == "06")
+                            {
+                                Imprime_OnLine(Mensaje, evento);
+                                Timer_Restablece.Enabled = true;
+                                lblRespuesta.Visible = true;
+                                lblRespuesta.Text = Mensaje;
+                            }
+                            else
+                            {
+                                Timer_Restablece.Enabled = true;
+                                lblRespuesta.Visible = true;
+                                lblRespuesta.Text = Mensaje;
+                            }
+                            txtingreso.Text = string.Empty;
+                            Mensaje = string.Empty;
+
+                            client.Close();
+                            RestableceMenu();
+                        }
+                    }
+
+                    catch (SocketException)
+                    {
+
+                        /* SE AGREGA SECUENCIA IF .. ELSE LA CUAL DETERMINA SE ES ENTRADA FUERA DE LINEA O SALIDA FUERA DE
+                         * LINEA, LA CUAL A SU VEZ ES GUARDADA EN UN ARCHIVO TXT PARA SU POSTERIOR RESCATE DESDE
+                         * EL MPOINT */
+                        client.Close();
+                        lblRespuesta.Text = Mensaje;
+
+                        if (evento == 1)
+                        {
+                            string cadena = TrabajaCadena.MarcaEntradaFueraLinea(tarjeta, IP);
+                            archivo.EscrituraMarcaFueraLinea(cadena);
+                            Imprime_OffLine(Mensaje, 3, tarjeta);
+                            Timer_Restablece.Enabled = true;
+                            EstadoServidor = false;
+                        }
+                        else
+                        {
+                            string cadena = TrabajaCadena.MarcaSalidaFueraLinea(tarjeta, IP);
+                            archivo.EscrituraMarcaFueraLinea(cadena);
+                            Imprime_OffLine(Mensaje, 4, tarjeta);
+                            Timer_Restablece.Enabled = true;
+                            EstadoServidor = false;
+                        }
+                    }
+                }
+                else
+                {
+                    lblRespuesta.Visible = true;
+                    lblRespuesta.Text = "Tarjeta Invalida";
+                    Timer_Restablece.Enabled = true;
+                    RestableceMenu();
+                }
+            }
         }
 
         /* TIMER QUE CONTROLA EL TIEMPO DE ESPERA EN EL INGRESO DEL PIN O RUT DEL CLIENTE 
-           EL CUAL ESTA ESTABLECIDO EN 7 SEG */
+           EL CUAL ESTA ESTABLECIDO EN 5 SEG */
         private void Timer_Menu_Tick(object sender, EventArgs e)
         {
             RestableceMenu();
@@ -310,9 +320,6 @@ namespace Cliente
             try
             {
                 serialPort1.Open();
-                serialPort1.WriteLine("");
-                serialPort1.WriteLine("");
-                serialPort1.WriteLine("");
                 serialPort1.WriteLine(" *** ASISTENCIA EN LINEA *** ");
                 serialPort1.WriteLine("EVENTO : " + evento);
                 serialPort1.WriteLine("FECHA  : " + lblHoraServidor.Text);
@@ -340,7 +347,7 @@ namespace Cliente
         }
 
         /* SE MODIFICA FUNCION AGREGANDO EL ENCENDIDO DE LA CAMARA DEL RELOJ */
-        public void Imprime_OffLine(string mensaje, int even)
+        public void Imprime_OffLine(string mensaje, int even, string tarjeta)
         {
             /* ASIGNACION DE PARAMETROS */
             NomEmpre = archivo.Datos[0].ToString();
@@ -375,14 +382,11 @@ namespace Cliente
             try
             {
                 serialPort1.Open();
-                serialPort1.WriteLine("");
-                serialPort1.WriteLine("");
-                serialPort1.WriteLine("");
                 serialPort1.WriteLine(" *** ASISTENCIA REGISTRADA *** ");
                 serialPort1.WriteLine("EVENTO : " + evento);
                 serialPort1.WriteLine("FECHA  : " + lblHoraServidor.Text);
                 serialPort1.WriteLine("EMPRESA: " + NomEmpre);
-                serialPort1.WriteLine("NOMBRE : " + txtingreso.Text);
+                serialPort1.WriteLine("NOMBRE : " + tarjeta);
                 serialPort1.WriteLine("RELOJ  : " + IP);
                 serialPort1.WriteLine("");
                 serialPort1.WriteLine("");
