@@ -1,12 +1,12 @@
 NomEmpre=LOGAM
-IP=192.168.100.201
+IP=192.168.100.211
 Ratios=38400
 PuertoImpresora=COM4
 ServidorBD=RCORREA
 NombreBD=BD_STANDAR_LOGAM
 Usuario=LOGAM
 Password=LOGAMM
-DirreccionServidor=192.168.100.26
+DirreccionServidor=192.168.100.105
 PuertoServidor=1001
 LargoTarjeta=13
 ActualizarFecha=14:15

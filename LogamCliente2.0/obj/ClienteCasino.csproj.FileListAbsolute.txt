@@ -1,0 +1,11 @@
+D:\Comunicaciones\ClienteCasino\LogamCliente2.0\obj\Debug\ResolveAssemblyReference.cache
+D:\Comunicaciones\ClienteCasino\LogamCliente2.0\obj\Debug\ClienteCasino.Form1.resources
+D:\Comunicaciones\ClienteCasino\LogamCliente2.0\obj\Debug\ClienteCasino.Properties.Resources.resources
+D:\Comunicaciones\ClienteCasino\LogamCliente2.0\obj\Debug\ClienteCasino.csproj.GenerateResource.Cache
+D:\Comunicaciones\ClienteCasino\LogamCliente2.0\obj\Debug\Cliente.exe
+D:\Comunicaciones\ClienteCasino\LogamCliente2.0\bin\Debug\Cliente.exe
+D:\Comunicaciones\ClienteCasino\LogamCliente2.0\bin\Debug\Cliente.pdb
+D:\Comunicaciones\ClienteCasino\LogamCliente2.0\bin\Debug\BioID.dll
+D:\Comunicaciones\ClienteCasino\LogamCliente2.0\bin\Debug\System.Data.SqlClient.dll
+D:\Comunicaciones\ClienteCasino\LogamCliente2.0\bin\Debug\System.Data.SqlClient.xml
+D:\Comunicaciones\ClienteCasino\LogamCliente2.0\obj\Debug\Cliente.pdb

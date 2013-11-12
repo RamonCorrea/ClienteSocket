@@ -3,7 +3,7 @@ using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 
-namespace Cliente
+namespace ClienteCasino
 {
     partial class Form1
     {
@@ -36,16 +36,10 @@ namespace Cliente
             this.components = new System.ComponentModel.Container();
             this.lblestado = new System.Windows.Forms.Label();
             this.txtingreso = new System.Windows.Forms.TextBox();
-            this.btnEntrada = new System.Windows.Forms.Button();
-            this.btnSalida = new System.Windows.Forms.Button();
             this.lblHoraServidor = new System.Windows.Forms.Label();
             this.Timer_inline = new System.Windows.Forms.Timer();
             this.lblMensaje = new System.Windows.Forms.Label();
             this.Timer_Restablece = new System.Windows.Forms.Timer();
-            this.btnEnrolar = new System.Windows.Forms.Button();
-            this.btnNoApta = new System.Windows.Forms.Button();
-            this.btnVerifica = new System.Windows.Forms.Button();
-            this.btnElimina = new System.Windows.Forms.Button();
             this.Timer_Menu = new System.Windows.Forms.Timer();
             this.serialPort1 = new System.IO.Ports.SerialPort(this.components);
             this.Timer_Segundero = new System.Windows.Forms.Timer();
@@ -67,30 +61,7 @@ namespace Cliente
             this.txtingreso.PasswordChar = '*';
             this.txtingreso.Size = new System.Drawing.Size(260, 52);
             this.txtingreso.TabIndex = 3;
-            this.txtingreso.Visible = false;
             this.txtingreso.TextChanged += new System.EventHandler(this.txtingreso_TextChanged);
-            // 
-            // btnEntrada
-            // 
-            this.btnEntrada.Font = new System.Drawing.Font("Tahoma", 18F, System.Drawing.FontStyle.Regular);
-            this.btnEntrada.ForeColor = System.Drawing.Color.Black;
-            this.btnEntrada.Location = new System.Drawing.Point(24, 53);
-            this.btnEntrada.Name = "btnEntrada";
-            this.btnEntrada.Size = new System.Drawing.Size(128, 153);
-            this.btnEntrada.TabIndex = 5;
-            this.btnEntrada.Text = "Entrada";
-            this.btnEntrada.Click += new System.EventHandler(this.btnEntrada_Click);
-            // 
-            // btnSalida
-            // 
-            this.btnSalida.Font = new System.Drawing.Font("Tahoma", 18F, System.Drawing.FontStyle.Regular);
-            this.btnSalida.ForeColor = System.Drawing.Color.Black;
-            this.btnSalida.Location = new System.Drawing.Point(174, 53);
-            this.btnSalida.Name = "btnSalida";
-            this.btnSalida.Size = new System.Drawing.Size(128, 153);
-            this.btnSalida.TabIndex = 6;
-            this.btnSalida.Text = "Salida";
-            this.btnSalida.Click += new System.EventHandler(this.btnSalida_Click);
             // 
             // lblHoraServidor
             // 
@@ -111,56 +82,16 @@ namespace Cliente
             // 
             this.lblMensaje.Font = new System.Drawing.Font("Tahoma", 10F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Underline))));
             this.lblMensaje.ForeColor = System.Drawing.Color.White;
-            this.lblMensaje.Location = new System.Drawing.Point(73, 34);
+            this.lblMensaje.Location = new System.Drawing.Point(40, 34);
             this.lblMensaje.Name = "lblMensaje";
-            this.lblMensaje.Size = new System.Drawing.Size(168, 16);
-            this.lblMensaje.Text = "Menu Marcacion";
+            this.lblMensaje.Size = new System.Drawing.Size(213, 16);
+            this.lblMensaje.Text = "ACERQUE SU CREDENCIAL";
             this.lblMensaje.TextAlign = System.Drawing.ContentAlignment.TopCenter;
             // 
             // Timer_Restablece
             // 
             this.Timer_Restablece.Interval = 2000;
             this.Timer_Restablece.Tick += new System.EventHandler(this.Timer_Restablece_Tick);
-            // 
-            // btnEnrolar
-            // 
-            this.btnEnrolar.Font = new System.Drawing.Font("Arial", 10F, System.Drawing.FontStyle.Bold);
-            this.btnEnrolar.Location = new System.Drawing.Point(85, 139);
-            this.btnEnrolar.Name = "btnEnrolar";
-            this.btnEnrolar.Size = new System.Drawing.Size(67, 67);
-            this.btnEnrolar.TabIndex = 8;
-            this.btnEnrolar.Text = "Enrolar";
-            this.btnEnrolar.Visible = false;
-            // 
-            // btnNoApta
-            // 
-            this.btnNoApta.Font = new System.Drawing.Font("Arial", 10F, System.Drawing.FontStyle.Bold);
-            this.btnNoApta.Location = new System.Drawing.Point(174, 139);
-            this.btnNoApta.Name = "btnNoApta";
-            this.btnNoApta.Size = new System.Drawing.Size(67, 67);
-            this.btnNoApta.TabIndex = 9;
-            this.btnNoApta.Text = "No Apta";
-            this.btnNoApta.Visible = false;
-            // 
-            // btnVerifica
-            // 
-            this.btnVerifica.Font = new System.Drawing.Font("Arial", 10F, System.Drawing.FontStyle.Bold);
-            this.btnVerifica.Location = new System.Drawing.Point(7, 139);
-            this.btnVerifica.Name = "btnVerifica";
-            this.btnVerifica.Size = new System.Drawing.Size(72, 67);
-            this.btnVerifica.TabIndex = 10;
-            this.btnVerifica.Text = "Verificar";
-            this.btnVerifica.Visible = false;
-            // 
-            // btnElimina
-            // 
-            this.btnElimina.Font = new System.Drawing.Font("Arial", 10F, System.Drawing.FontStyle.Bold);
-            this.btnElimina.Location = new System.Drawing.Point(248, 139);
-            this.btnElimina.Name = "btnElimina";
-            this.btnElimina.Size = new System.Drawing.Size(67, 67);
-            this.btnElimina.TabIndex = 11;
-            this.btnElimina.Text = "Eliminar";
-            this.btnElimina.Visible = false;
             // 
             // Timer_Menu
             // 
@@ -183,7 +114,7 @@ namespace Cliente
             // 
             this.lblRespuesta.Font = new System.Drawing.Font("Tahoma", 20F, System.Drawing.FontStyle.Regular);
             this.lblRespuesta.ForeColor = System.Drawing.SystemColors.ControlLightLight;
-            this.lblRespuesta.Location = new System.Drawing.Point(3, 0);
+            this.lblRespuesta.Location = new System.Drawing.Point(0, 0);
             this.lblRespuesta.Name = "lblRespuesta";
             this.lblRespuesta.Size = new System.Drawing.Size(312, 215);
             this.lblRespuesta.TextAlign = System.Drawing.ContentAlignment.TopCenter;
@@ -198,14 +129,8 @@ namespace Cliente
             this.ClientSize = new System.Drawing.Size(318, 215);
             this.ControlBox = false;
             this.Controls.Add(this.lblRespuesta);
-            this.Controls.Add(this.btnElimina);
-            this.Controls.Add(this.btnVerifica);
-            this.Controls.Add(this.btnNoApta);
-            this.Controls.Add(this.btnEnrolar);
             this.Controls.Add(this.lblMensaje);
             this.Controls.Add(this.lblHoraServidor);
-            this.Controls.Add(this.btnSalida);
-            this.Controls.Add(this.btnEntrada);
             this.Controls.Add(this.txtingreso);
             this.Controls.Add(this.lblestado);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
@@ -213,6 +138,7 @@ namespace Cliente
             this.MinimizeBox = false;
             this.Name = "Form1";
             this.Text = "LOGAM CLIENT";
+            this.Load += new System.EventHandler(this.Form1_Load);
             this.ResumeLayout(false);
 
         }
@@ -221,16 +147,10 @@ namespace Cliente
 
         private System.Windows.Forms.Label lblestado;
         private System.Windows.Forms.TextBox txtingreso;
-        private System.Windows.Forms.Button btnEntrada;
-        private System.Windows.Forms.Button btnSalida;
         private Label lblHoraServidor;
         private Timer Timer_inline;
         private Label lblMensaje;
         public Timer Timer_Restablece;
-        private Button btnEnrolar;
-        private Button btnNoApta;
-        private Button btnVerifica;
-        private Button btnElimina;
         private Timer Timer_Menu;
         private System.IO.Ports.SerialPort serialPort1;
         private Timer Timer_Segundero;

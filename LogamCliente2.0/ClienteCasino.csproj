@@ -7,7 +7,7 @@
     <ProjectGuid>{D485132B-3179-4C33-A56C-A8D6486E158C}</ProjectGuid>
     <OutputType>WinExe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Cliente</RootNamespace>
+    <RootNamespace>ClienteCasino</RootNamespace>
     <AssemblyName>Cliente</AssemblyName>
     <ProjectTypeGuids>{4D628B5B-2FBC-4AA6-8C16-197242AEB884};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <PlatformFamilyName>WindowsCE</PlatformFamilyName>

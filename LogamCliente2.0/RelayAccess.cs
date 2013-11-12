@@ -1,7 +1,7 @@
 using System;
 using System.Runtime.InteropServices;
 
-namespace Cliente
+namespace ClienteCasino
 {
     class RelayAccess
     {

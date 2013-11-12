@@ -10,7 +10,7 @@ using System.Net.Sockets;
 using System.Net;
 using System.Data.SqlClient;
 
-namespace Cliente
+namespace ClienteCasino
 {
     /* MaximizeBox =  Ponlo en FALSE (Esto quita el botón maximizar)
        MinimizeBox =  Ponlo en FALSE (Esto quita el botón minimizar)
@@ -21,7 +21,7 @@ namespace Cliente
     {
         ManejoArchivo archivo = new ManejoArchivo();
         ConvierteCadena TrabajaCadena;
-        
+
         private int evento;
         private string NomEmpre; 
         private string IP; 
@@ -55,21 +55,6 @@ namespace Cliente
             Application.Run(new Form1());
         }
 
-        private void btnEntrada_Click(object sender, EventArgs e)
-        {
-            evento = 1;
-            Timer_Menu.Enabled = true;
-            IngresoMenu();
-        }
-
-        private void btnSalida_Click(object sender, EventArgs e)
-        {
-            evento = 2;
-            Timer_Menu.Enabled = true;
-            IngresoMenu();
-           
-        }
-
         /* TIMER QUE CONTROLA EL ESTADO DE ONLINE O OFFLINE DEL RELOJ ESTE SE EJECUTA POR DEFECTO CADA 15 MIN */       
         private void timer1_Tick(object sender, EventArgs e)
         {
@@ -86,11 +71,13 @@ namespace Cliente
                 client.Connect(DireccionServidor);    
                 client.Send(sendResponse);
                 EstadoServidor = true;
+                evento = 1;
                 client.Close();
             }
             catch (SocketException)
             {
                 EstadoServidor = false;
+                evento = 3;
             }
             
         }
@@ -98,7 +85,10 @@ namespace Cliente
         /* TIMER QUE SE ENCARGA DE ACTUALIZAR EL MENSAJE DE LBLMENSAJE LIMPIANDO Y DANDO EL FOCUS A TXTINGRESO */
         private void Timer_Restablece_Tick(object sender, EventArgs e)
         {
-            lblMensaje.Text = "INGRESE SU PIN";
+            lblMensaje.Text = "ACERQUE SU CREDENCIAL";
+            txtingreso.Text = "";
+            txtingreso.Enabled = true;
+            txtingreso.Focus();
             lblRespuesta.Visible = false; 
             Timer_Restablece.Enabled = false;
             RestableceMenu();
@@ -107,43 +97,18 @@ namespace Cliente
         /* FUNCION QUE REESTABLECE EL MENU DE MARCACION */
         public void RestableceMenu()
         {
-            lblMensaje.Text = "MENU MARCACION";
-            txtingreso.Visible = false;
-            txtingreso.Text = string.Empty;
-            txtingreso.Enabled = false;
-            btnEnrolar.Visible = false;
-            btnNoApta.Visible = false;
-            btnElimina.Visible = false;
-            btnVerifica.Visible = false;
-            btnEntrada.Visible = true;
-            btnSalida.Visible = true;
-            evento = 0;
+            lblMensaje.Text = "ACERQUE SU CREDENCIAL";
         }
        
         /* METODO QUE PERMITE MOSTRAR EL MENU DE MARCACION */
         public void IngresoMenu()
         {
             txtingreso.Visible = true;
-            lblMensaje.Text = "INGRESE SU PIN";
+            lblMensaje.Text = "ACERQUE SU CREDENCIAL";
             txtingreso.Text = string.Empty;
             txtingreso.Enabled = true;
             txtingreso.Focus();
-            btnEntrada.Visible = false;
-            btnSalida.Visible = false;
-        }
-
-        /* METODO QUE ACTIVA LAS OPCIONES DEL MENU DE ENROLAMIENTO */
-        public void IngresoMenuAdmin()
-        {
-            txtingreso.Visible = true;
-            lblMensaje.Text = "INGRESE SU PIN";
-            btnEnrolar.Visible = true;
-            btnNoApta.Visible = true;
-            btnElimina.Visible = true;
-            btnVerifica.Visible = true;
-            btnEntrada.Visible = false;
-            btnSalida.Visible = false;
-        }
+        }     
 
         /* RUTINA QUE CONTROLA EL INGRESO AL MENU DE ADMINISTRADOR DEL RELOJ, SE AGREGA CONTROL SOBRE EL INGRESO DE LA TARJETA*/
         private void txtingreso_TextChanged(object sender, EventArgs e)
@@ -178,30 +143,17 @@ namespace Cliente
 
                         if (EstadoServidor == false)
                         {
-                            if (evento == 1)
-                            {
-                                string cadena = TrabajaCadena.MarcaEntradaFueraLinea(tarjeta, IP);
-                                archivo.EscrituraMarcaFueraLinea(cadena);
-                                Imprime_OffLine(Mensaje, 3, tarjeta);
-                                EstadoServidor = false;
-                                txtingreso.Text = string.Empty;
-                                lblRespuesta.Visible = true;
-                                lblRespuesta.Text = "Asistencia Registrada";
-                                Timer_Restablece.Enabled = true;
-                                RestableceMenu();
-                            }
-                            else
-                            {
-                                string cadena = TrabajaCadena.MarcaSalidaFueraLinea(tarjeta, IP);
-                                archivo.EscrituraMarcaFueraLinea(cadena);
-                                Imprime_OffLine(Mensaje, 4, tarjeta);
-                                EstadoServidor = false;
-                                txtingreso.Text = string.Empty;
-                                lblRespuesta.Visible = true;
-                                lblRespuesta.Text = "Asistencia Registrada";
-                                Timer_Restablece.Enabled = true;
-                                RestableceMenu();
-                            }
+                            string cadena = TrabajaCadena.MarcaEntradaFueraLinea(tarjeta, IP, evento);
+                            string NombreFichero = @"\SDMMC\PruebaCasino\MarcaFueraLinea" + IP + ".txt";
+                            ManejoArchivo archivo2 = new ManejoArchivo(NombreFichero);
+                            archivo2.EscrituraMarcaFueraLinea(cadena);
+                            Imprime_OffLine(Mensaje, tarjeta);
+                            EstadoServidor = false;
+                            txtingreso.Text = string.Empty;
+                            lblRespuesta.Visible = true;
+                            lblRespuesta.Text = "ASISTENCIA REGISTRADA";
+                            Timer_Restablece.Enabled = true;
+                            RestableceMenu();
                         }
                         else
                         {
@@ -221,7 +173,7 @@ namespace Cliente
                             /* 06 EQUIVALE MARCA RESGISTRADA, 01 EQUIVALE A ALGUN ERROR EN LA MARCA */
                             if (Mensaje.Substring(0, 2) == "06")
                             {
-                                Imprime_OnLine(Mensaje, evento);
+                                Imprime_OnLine(Mensaje);
                                 Timer_Restablece.Enabled = true;
                                 lblRespuesta.Visible = true;
                                 lblRespuesta.Text = Mensaje;
@@ -249,27 +201,21 @@ namespace Cliente
                         client.Close();
                         lblRespuesta.Text = Mensaje;
 
-                        if (evento == 1)
-                        {
-                            string cadena = TrabajaCadena.MarcaEntradaFueraLinea(tarjeta, IP);
-                            archivo.EscrituraMarcaFueraLinea(cadena);
-                            Imprime_OffLine(Mensaje, 3, tarjeta);
-                            Timer_Restablece.Enabled = true;
-                            EstadoServidor = false;
-                        }
-                        else
-                        {
-                            string cadena = TrabajaCadena.MarcaSalidaFueraLinea(tarjeta, IP);
-                            archivo.EscrituraMarcaFueraLinea(cadena);
-                            Imprime_OffLine(Mensaje, 4, tarjeta);
-                            Timer_Restablece.Enabled = true;
-                            EstadoServidor = false;
-                        }
+                        string cadena = TrabajaCadena.MarcaEntradaFueraLinea(tarjeta, IP, evento);
+                        string NombreFichero = @"\SDMMC\PruebaCasino\MarcaFueraLinea" + IP + ".txt";
+                        ManejoArchivo archivo2 = new ManejoArchivo(NombreFichero);
+                        archivo2.EscrituraMarcaFueraLinea(cadena);
+                        Imprime_OffLine(Mensaje, tarjeta);
+                        Timer_Restablece.Enabled = true;
+                        EstadoServidor = false;
+
                     }
                 }
                 else
                 {
                     lblRespuesta.Visible = true;
+                    txtingreso.Enabled = false;
+                    txtingreso.Text = "";
                     lblRespuesta.Text = "Tarjeta Invalida";
                     Timer_Restablece.Enabled = true;
                     RestableceMenu();
@@ -285,7 +231,7 @@ namespace Cliente
         }
 
         /* SE MODIFICA FUNCION AGREGANDO EL ENCENDIDO DE LA CAMARA DEL RELOJ */
-        public void Imprime_OnLine(string mensaje, int even)
+        public void Imprime_OnLine(string mensaje)
         {
             /* ASIGNACION DE PARAMETROS */
             NomEmpre = archivo.Datos[0].ToString();
@@ -295,19 +241,6 @@ namespace Cliente
 
             serialPort1.BaudRate = Ratios;
             serialPort1.PortName = PuertoImpresora;
-
-            string evento = null;
-            if (even == 01)
-            {
-                evento = "Entrada";
-            }
-            else
-            {
-                if (even == 02)
-                {
-                    evento = "Salida";
-                }
-            }
 
             try
             {
@@ -321,7 +254,7 @@ namespace Cliente
             {
                 serialPort1.Open();
                 serialPort1.WriteLine(" *** ASISTENCIA EN LINEA *** ");
-                serialPort1.WriteLine("EVENTO : " + evento);
+                serialPort1.WriteLine("EVENTO : Entrada");
                 serialPort1.WriteLine("FECHA  : " + lblHoraServidor.Text);
                 serialPort1.WriteLine("EMPRESA: " + NomEmpre);
                 serialPort1.WriteLine("NOMBRE : " + mensaje.Substring(18,10));
@@ -347,7 +280,7 @@ namespace Cliente
         }
 
         /* SE MODIFICA FUNCION AGREGANDO EL ENCENDIDO DE LA CAMARA DEL RELOJ */
-        public void Imprime_OffLine(string mensaje, int even, string tarjeta)
+        public void Imprime_OffLine(string mensaje, string tarjeta)
         {
             /* ASIGNACION DE PARAMETROS */
             NomEmpre = archivo.Datos[0].ToString();
@@ -357,19 +290,6 @@ namespace Cliente
 
             serialPort1.BaudRate = Ratios;
             serialPort1.PortName = PuertoImpresora;
-
-            string evento = null;
-            if (even == 03)
-            {
-                evento = "Entrada";
-            }
-            else
-            {
-                if (even == 04)
-                {
-                    evento = "Salida";
-                }
-            }
            
             try
             {
@@ -383,7 +303,7 @@ namespace Cliente
             {
                 serialPort1.Open();
                 serialPort1.WriteLine(" *** ASISTENCIA REGISTRADA *** ");
-                serialPort1.WriteLine("EVENTO : " + evento);
+                serialPort1.WriteLine("EVENTO : Entrada");
                 serialPort1.WriteLine("FECHA  : " + lblHoraServidor.Text);
                 serialPort1.WriteLine("EMPRESA: " + NomEmpre);
                 serialPort1.WriteLine("NOMBRE : " + tarjeta);
@@ -439,14 +359,20 @@ namespace Cliente
 
                 client.Send(sendResponse);
                 EstadoServidor = true;
+                evento = 1;
                 client.Close();
             }
             catch (SocketException)
             {
                 EstadoServidor = false;
+                evento = 3;
             }
         }
 
+        private void Form1_Load(object sender, EventArgs e)
+        {
+
+        }
     }
 }
     

@@ -4,7 +4,7 @@ using System.Collections;
 using System.Text;
 using System.IO;
 
-namespace Cliente
+namespace ClienteCasino
 {
     class ManejoArchivo
     {
@@ -16,7 +16,7 @@ namespace Cliente
             /* CONSTRUCTOR DE LA CLASE */
             public ManejoArchivo()
             {
-                nombreFichero = @"\SDMMC\pruebas\MarcaFueraLinea.txt";
+                nombreFichero = @"\SDMMC\PruebaCasino\MarcaFueraLinea.txt";
                 //nombreFichero = "MarcaFueraLinea.txt";
                 LecturaParametros();
             }
@@ -55,7 +55,7 @@ namespace Cliente
             /* METODO EL CUAL LEE DESDE UN ARCHIVO INI LOS PARAMETROS PARA CONFIGURAR EL MT380 */
             public void LecturaParametros()
             {
-                string Ruta = @"\SDMMC\pruebas\Configuracion.txt";
+                string Ruta = @"\SDMMC\PruebaCasino\Configuracion.txt";
                 //string RutaWindows = "Configuracion.txt";
                 StreamReader fichero = File.OpenText(Ruta);
                 //StreamReader fichero = File.OpenText(RutaWindows);

@@ -5,7 +5,7 @@ using System.Runtime.InteropServices;
 using System.Data;
 using System.Data.SqlClient;
 
-namespace Cliente
+namespace ClienteCasino
 {
     class Updatefecha
     {

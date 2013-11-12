@@ -3,10 +3,11 @@ using System.Collections.Generic;
 using System.Text;
 using System.IO.Ports;
 
-namespace Cliente
+namespace ClienteCasino
 {
     public class ConvierteCadena
     {
+        /* FUNCION QUE SE ENCARGA DE TRANSFORMAR LA CDENA PARA QUE PUEDA SER INTERPRETADA POR LA BBDD */
         public string TransformaCadena(string cadena,int evento)
         {
                 string cadena2 = cadena.PadLeft(20, '0');
@@ -18,17 +19,17 @@ namespace Cliente
                 return cadena2;
         }
 
-        /* ESTA DEEBE TENER EL SGT FORMATO TARJETA_NUMERO+YYYYMMDD+HHMMSS,+EVENTO+IP+TAREA */
-        public string MarcaEntradaFueraLinea(string cadena,string ip)
+        /* ESTA DEBE TENER EL SGT FORMATO TARJETA_NUMERO+YYYYMMDD+HHMMSS,+EVENTO+IP+TAREA */
+        public string MarcaEntradaFueraLinea(string cadena,string ip, int evento)
         {
                 string cadena2 = cadena.PadLeft(20, '0');
                 string FechaHora = DateTime.Now.ToString("yyyyMMddHHmmss");
                 cadena2 += FechaHora;
-                cadena2 += "3";
+                cadena2 += evento;
                 cadena2 += ",";
                 cadena2 += ip;
                 cadena2 += ",";
-                cadena2 += "1";
+                cadena2 += "2";
                 return cadena2;
         }
 
@@ -42,7 +43,7 @@ namespace Cliente
                 cadena2 += ",";
                 cadena2 += ip;
                 cadena2 += ",";
-                cadena2 += "1";
+                cadena2 += "2";
                 return cadena2;
          }
       }

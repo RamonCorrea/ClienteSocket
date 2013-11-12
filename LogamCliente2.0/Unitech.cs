@@ -1,7 +1,7 @@
 using System.Runtime.InteropServices;
 using System;
 
-namespace Cliente
+namespace ClienteCasino
 {
     /* CLASE LA CUAL PERMITE ACCEDER A LA DLL UnitechAPI.dll Y ACCERDER A SUS METODOS */
     public class Unitech
